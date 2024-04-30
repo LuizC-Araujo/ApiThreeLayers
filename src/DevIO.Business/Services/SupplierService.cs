@@ -1,5 +1,6 @@
 ﻿using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
+using DevIO.Business.Models.Validations;
 
 namespace DevIO.Business.Services
 {
@@ -14,7 +15,9 @@ namespace DevIO.Business.Services
 
         public async Task Add(Supplier supplier)
         {
-            // validar se a entidade é consistente
+            if (!ExecuteValidation(new SupplierValidation(), supplier) 
+                || !ExecuteValidation(new AddressValidation(), supplier.Address)) return;
+
             // validar se hjá não existe outro fornecedor com o mesmo documento
 
             await _supplierRepository.Add(supplier);
@@ -22,6 +25,7 @@ namespace DevIO.Business.Services
 
         public async Task Update(Supplier supplier)
         {
+            if (!ExecuteValidation(new SupplierValidation(), supplier)) return;
             await _supplierRepository.Update(supplier);
         }
 
