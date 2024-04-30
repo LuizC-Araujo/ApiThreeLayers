@@ -7,5 +7,6 @@ namespace DevIO.Business.Interfaces
         Task<Supplier> GetSupplierAddress(Guid id);
         Task<Supplier> GetSupplierProductAddress(Guid id);
         Task<Address> GetAddressBySupplier(Guid supplierId);
+        Task DeleteSupplierAddress(Address address);
     }
 }
