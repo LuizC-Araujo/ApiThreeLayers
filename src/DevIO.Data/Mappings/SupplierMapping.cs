@@ -21,8 +21,8 @@ namespace DevIO.Data.Mappings
             //Relação de 1 pra 1 =: Supplier tem um Address
 
             builder.HasOne(s => s.Address)
-                .WithOne(a => a.Supplier)
-                .HasForeignKey(a => a);
+                .WithOne(a => a.Supplier);
+                
 
             //Relação 1 para N => Suppplier tem muitos products
             builder

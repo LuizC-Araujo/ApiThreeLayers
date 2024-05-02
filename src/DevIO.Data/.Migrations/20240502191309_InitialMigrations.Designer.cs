@@ -4,16 +4,18 @@ using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DevIO.Data.Persistence.Migrations
+namespace DevIO.Data.Migrations
 {
     [DbContext(typeof(DevIODbContext))]
-    partial class DevIODbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502191309_InitialMigrations")]
+    partial class InitialMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,6 +118,9 @@ namespace DevIO.Data.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(200)");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SupplierType")
                         .HasColumnType("int");

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DevIO.Data.Persistence.Migrations
+namespace DevIO.Data.Migrations
 {
     public partial class InitialMigrations : Migration
     {
@@ -14,6 +14,7 @@ namespace DevIO.Data.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(200)", nullable: false),
                     Document = table.Column<string>(type: "varchar(14)", nullable: false),
                     SupplierType = table.Column<int>(type: "int", nullable: false),

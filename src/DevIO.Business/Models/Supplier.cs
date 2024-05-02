@@ -2,6 +2,7 @@
 {
     public class Supplier : Entity
     {
+        public Guid SupplierId { get; set; }
         public string? Name { get; set; }
         public string? Document { get; set; }
         public SupplierType SupplierType { get; set; }

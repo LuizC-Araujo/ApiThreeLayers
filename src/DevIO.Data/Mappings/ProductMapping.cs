@@ -13,11 +13,11 @@ namespace DevIO.Data.Mappings
 
             builder.Property(x => x.Name)
                 .IsRequired()
-                .HasColumnType("varchar(200");
+                .HasColumnType("varchar(200)");
 
             builder.Property(x =>x.Description)
                 .IsRequired()
-                .HasColumnType("varchar(1000");
+                .HasColumnType("varchar(1000)");
 
             builder.ToTable("Products");
         }
