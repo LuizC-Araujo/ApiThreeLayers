@@ -7,7 +7,11 @@ namespace DevIO.Data.Context
     {
         public DevIODbContext(DbContextOptions<DevIODbContext> options) : base(options) 
         {
-            // some configs
+            // evita problema de concorrência
+            // não faz sentido ter o tracking ativado quando traz o objeto do banco e mapeia pra outra model/viewModel/DTO
+            // só vale a pena ter ligado quando mapeia e executa ela mesma
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Product> Products { get; set; }
@@ -30,6 +34,20 @@ namespace DevIO.Data.Context
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync( CancellationToken cancellationToken = default)
+        {
+            // pega as entidades de CreatedAt
+            foreach (var entry in ChangeTracker.Entries().Where(e => e.Entity.GetType().GetProperty("CreatedAt") != null))
+            {
+                if (entry.State == EntityState.Added) entry.Property("CreatedAt").CurrentValue = DateTime.Now;
+
+                // com IsModified = false, o EF não inclui essa propriedade na query que vai fazer o update
+                if (entry.State == EntityState.Modified) entry.Property("CreatedAt").IsModified = false;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }
