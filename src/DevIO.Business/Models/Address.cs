@@ -9,5 +9,8 @@
         public string? Neighborhood { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
+
+        // EF Relation
+        public Supplier Supplier { get; set; }
     }
 }

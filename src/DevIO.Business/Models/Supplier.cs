@@ -7,6 +7,8 @@
         public SupplierType SupplierType { get; set; }
         public bool Active { get; set; }
         public Address? Address { get; set; }
+
+        //EF Relation
         public IEnumerable<Product> Products { get; set; }
     }
 }
