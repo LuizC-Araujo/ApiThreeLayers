@@ -2,6 +2,7 @@
 {
     public class Address : Entity
     {
+        public Guid SupplierId { get; set; }
         public string? Logradouro { get; set; }
         public string? Number { get; set; }
         public string? Complement { get; set; }
