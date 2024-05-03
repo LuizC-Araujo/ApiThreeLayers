@@ -1,3 +1,4 @@
+using DevIO.Api.Configurations;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<DevIODbContext>(options =>
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.ResolveDependecies();
 
 var app = builder.Build();
 
