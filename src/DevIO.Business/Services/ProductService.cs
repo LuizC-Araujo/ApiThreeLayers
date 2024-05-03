@@ -1,6 +1,7 @@
 ﻿using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using DevIO.Business.Models.Validations;
+using DevIO.Business.Notifications;
 
 namespace DevIO.Business.Services
 {
@@ -18,6 +19,14 @@ namespace DevIO.Business.Services
         {
             if (!ExecuteValidation(new ProductValidation(), product))
                 return;
+
+            var produto = _productRepository.GetById(product.Id);
+            if (produto != null)
+            {
+                Notification("Já existe um produto com o id informado");
+                return;
+
+            }
 
             await _productRepository.Add(product);
         }
