@@ -15,7 +15,7 @@ namespace DevIO.Data.Context
         }
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Address> Adresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
