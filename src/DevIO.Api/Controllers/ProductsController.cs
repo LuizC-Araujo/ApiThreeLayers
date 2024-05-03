@@ -3,6 +3,7 @@ using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace DevIO.Api.Controllers
 {
@@ -13,7 +14,7 @@ namespace DevIO.Api.Controllers
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository, IProductService productService, IMapper mapper)
+        public ProductsController(IProductRepository productRepository, IProductService productService, IMapper mapper, INotifier notifier) : base(notifier)
         {    
             _productRepository = productRepository;
             _productService = productService;
@@ -43,7 +44,7 @@ namespace DevIO.Api.Controllers
 
             await _productService.Add(_mapper.Map<Product>(productViewModel));
 
-            return CustomResponse(productViewModel);
+            return CustomResponse(HttpStatusCode.Created, productViewModel);
         }
 
         [HttpPut("{id:guid}")]
@@ -67,7 +68,7 @@ namespace DevIO.Api.Controllers
         
             await _productService.Update(_mapper.Map<Product>(productUpdate));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         [HttpDelete("{id:guid}")]
@@ -79,7 +80,7 @@ namespace DevIO.Api.Controllers
 
             await _productService.Remove(id);
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         private async Task<ProductViewModel> GetProduct(Guid id)

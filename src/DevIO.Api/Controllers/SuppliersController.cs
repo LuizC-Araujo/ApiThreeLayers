@@ -3,6 +3,7 @@ using DevIO.Api.ViewModels;
 using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace DevIO.Api.Controllers
 {
@@ -12,7 +13,7 @@ namespace DevIO.Api.Controllers
         private readonly ISupplierRepository _supplierRepository;
         private readonly ISupplierService _supplierService;
         private readonly IMapper _mapper;
-        public SuppliersController(ISupplierRepository supplierRepository, ISupplierService supplierService, IMapper mapper)
+        public SuppliersController(ISupplierRepository supplierRepository, ISupplierService supplierService, IMapper mapper, INotifier notifier) : base(notifier)
         {
             _supplierRepository = supplierRepository;
             _supplierService = supplierService;
@@ -42,7 +43,7 @@ namespace DevIO.Api.Controllers
 
             await _supplierService.Add(_mapper.Map<Supplier>(supplierViewModel));
 
-            return CustomResponse(supplierViewModel);
+            return CustomResponse(HttpStatusCode.Created, supplierViewModel);
         }
 
         [HttpPut("{id:guid}")]
@@ -58,7 +59,7 @@ namespace DevIO.Api.Controllers
 
             await _supplierService.Update(_mapper.Map<Supplier>(supplierViewModel));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         [HttpDelete("{id:guid}")]
@@ -66,7 +67,7 @@ namespace DevIO.Api.Controllers
         {
             await _supplierService.Remove(id);
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         private async Task<SupplierViewModel> GetSupplierProductAddress(Guid id)
